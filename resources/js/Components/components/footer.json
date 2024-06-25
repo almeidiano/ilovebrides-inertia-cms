@@ -1,0 +1,195 @@
+{
+  "navigation": [
+    {
+      "text": "Detalhes Gerais",
+      "children": [
+        {
+          "url": "https://ilovebrides.pt/info/estatuto-editorial",
+          "text": "Editorial"
+        },
+        {
+          "url": "https://ilovebrides.pt/planos-profissionais",
+          "text": "Planos Profissionais"
+        },
+        {
+          "url": "https://ilovebrides.pt/info/quem-somos",
+          "text": "Quem Somos"
+        },
+        {
+          "url": "https://ilovebrides.pt/revista",
+          "text": "Revista"
+        }
+      ]
+    },
+    {
+      "text": "Políticas e Informações Legais",
+      "children": [
+        {
+          "url": "https://ilovebrides.pt/info/politica-de-privacidade",
+          "text": "Politica de Privacidade"
+        },
+        {
+          "url": "https://ilovebrides.pt/info/nota-legal",
+          "text": "Nota Legal"
+        },
+        {
+          "url": "https://ilovebrides.pt/info/cookies",
+          "text": "Cookies"
+        }
+      ]
+    },
+    {
+      "text": "Condições",
+      "children": [
+        {
+          "url": "https://ilovebrides.pt/info/condicoes-gerais",
+          "text": "Condições Gerais"
+        },
+        {
+          "url": "https://ilovebrides.pt/info/condicoes-adesao-empresas",
+          "text": "Condições Particulares Adesão Empresas"
+        },
+        {
+          "url": "https://ilovebrides.pt/info/condicoes-adesao-utilizadores",
+          "text": "Condições Particulares Adesão Ultilizadores"
+        }
+      ]
+    },
+    {
+      "text": "Downloads",
+      "children": [
+        {
+          "url": "#",
+          "text": "Media Kit (download)"
+        },
+        {
+          "url": "#",
+          "text": "Características Técnicas da Revista (download)"
+        }
+      ]
+    }
+  ],
+  "socialMedia": [
+    {
+      "url": "https://www.facebook.com/groups/2185253408406032/",
+      "icon": "https://ilovebrides.almeidiano.dev/uploads/images/square-facebook.svg"
+    },
+    {
+      "url": "https://www.instagram.com/ilovebridespt/",
+      "icon": "https://ilovebrides.almeidiano.dev/uploads/images/instagram.svg"
+    },
+    {
+      "url": "https://twitter.com/ilovebridespt",
+      "icon": "https://ilovebrides.almeidiano.dev/uploads/images/square-x-twitter.svg"
+    },
+    {
+      "url": "https://www.pinterest.pt/ilovebridespt/",
+      "icon": "https://ilovebrides.almeidiano.dev/uploads/images/pinterest.svg"
+    },
+    {
+      "url": "https://www.youtube.com/c/ilovebrides",
+      "icon": "https://ilovebrides.almeidiano.dev/uploads/images/youtube.svg"
+    },
+    {
+      "url": "https://pt.linkedin.com/company/ilovebrides",
+      "icon": "https://ilovebrides.almeidiano.dev/uploads/images/linkedin.svg"
+    }
+  ],
+  "legal": [
+    {
+      "url": "https://ilovebrides.pt/info/politica-de-privacidade",
+      "text": "Politica de Privacidade"
+    },
+    {
+      "url": "https://ilovebrides.pt/info/nota-legal",
+      "text": "Nota Legal"
+    }
+  ],
+  "weddingDistricties": [
+    {
+      "url": "#",
+      "text": "Casamentos Açores"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Aveiro"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Beja"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Braga"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Bragança"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Castelo Branco"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Coimbra"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Évora"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Faro"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Guarda"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Leiria"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Lisboa"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Madeira"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Portalegre"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Porto"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Santarém"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Setúbal"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Viana do Castelo"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Vila Real"
+    },
+    {
+      "url": "#",
+      "text": "Casamentos Viseu"
+    }
+  ],
+  "rights": "© I LOVE BRIDES | ALL RIGHTS RESERVED",
+  "footerLogo": "https://ilovebrides.almeidiano.dev/uploads/images/main-logo-inverse.svg",
+  "updated_at": {
+    "$date": "2024-03-13T09:19:54.510Z"
+  }
+}

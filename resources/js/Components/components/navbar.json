@@ -1,0 +1,62 @@
+{
+    "navigation": {
+      "position": "right",
+      "items": [
+        {
+          "id": "lwun0xk7",
+          "url": "#",
+          "text": "Item teste"
+        },
+        {
+          "url": "#",
+          "text": "Noivos"
+        },
+        {
+          "url": "#",
+          "text": "Cerimônia"
+        },
+        {
+          "url": "#",
+          "text": "Fornecedores"
+        },
+        {
+          "url": "#",
+          "text": "Blog"
+        },
+        {
+          "url": "#",
+          "text": "Weddings"
+        },
+        {
+          "url": "#",
+          "text": "Destination Weddings"
+        },
+        {
+          "url": "#",
+          "text": "Wedmarket"
+        },
+        {
+          "url": "#",
+          "text": "Revista"
+        },
+        {
+          "url": "#",
+          "text": "Mídia",
+          "children": [
+            {
+              "url": "#",
+              "text": "TV"
+            },
+            {
+              "url": "#",
+              "text": "Podcast"
+            }
+          ]
+        }
+      ],
+      "logo": "C:\\xampp\\htdocs\\ilovebrides-cms-laravel-api\\public\\media/images/C:\\xampp\\htdocs\\ilovebrides-cms-laravel-api\\public\\media/images/451a1773596ba3f6b3cbb8d146919451.png"
+    },
+    "updated_at": {
+      "$date": "2024-05-31T12:06:04.029Z"
+    }
+  }
