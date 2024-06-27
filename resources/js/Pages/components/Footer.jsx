@@ -7,6 +7,9 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from "@mui/material";
 
+// appbar
+import CssBaseline from '@mui/material/CssBaseline';
+
 function footer({data}) {
 
   console.log(data)
@@ -14,17 +17,28 @@ function footer({data}) {
   const [loading, setLoading] = useState(true);
 
   const Footer = styled('div')(() => ({
-    backgroundColor: 'black'
+    backgroundColor: 'black',
+    padding: 35,
+    color: 'white',
+    display: 'flex',
+    flexDirection: 'column'
   }));
 
   return (
-    <Footer>kk</Footer>
+      <Footer>
+        <img
+          src={data.logo}
+          // src={`${process.env.NEXT_PUBLIC_DEPLOY_ROOT_URL}/uploads/images/main-logo-inverse.svg`}
+          width={150}
+          alt="ILOVEBRIDES Logo"
+        />
+      </Footer>
     // <footer className="footer p-10 bg-black text-neutral-content flex flex-col">
     //   {
     //     data && loading === false ?
     //       <>
     //         <div>
-    //           {/* <img 
+    //           {/* <img
     //             src={`http://localhost:8000/media/images/${footer.logo}`}
     //             // src={`${process.env.NEXT_PUBLIC_DEPLOY_ROOT_URL}/uploads/images/main-logo-inverse.svg`}
     //             height={150}
@@ -46,7 +60,7 @@ function footer({data}) {
     //           {
     //             footer && footer.navigation.map((item, index) => {
     //               return <div key={index} className="flex flex-col">
-    //                 <h3 className="text-lg mb-2">{item.text}</h3> 
+    //                 <h3 className="text-lg mb-2">{item.text}</h3>
     //                 <div className="flex flex-col space-y-3">
     //                   {
     //                     item.children.map((child, index) => {
@@ -85,7 +99,7 @@ function footer({data}) {
     //           {/* <div className="flex space-x-2">
     //             <Image className="cursor-pointer" onClick={()=> {if (document) {document.getElementById('my_modal_google').showModal()}}} alt="GooglePlay Logo" src='/assets/images/GooglePlayBadge.png' width={130} height={20} />
     //             <Image className="cursor-pointer" onClick={()=> {if (document) {document.getElementById('my_modal_apple').showModal()}}} alt="AppStore Logo" src='/assets/images/AppStoreBadge.png' width={120} height={20} />
-                
+
     //           </div> */}
     //         </div>
 
@@ -106,7 +120,7 @@ function footer({data}) {
     //       </>
     //     :
     //     <Box sx={{display: 'flex', justifyContent: 'center'}}>
-    //       <CircularProgress />        
+    //       <CircularProgress />
     //     </Box>
     //   }
 

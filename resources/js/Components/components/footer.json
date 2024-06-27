@@ -188,7 +188,7 @@
     }
   ],
   "rights": "© I LOVE BRIDES | ALL RIGHTS RESERVED",
-  "footerLogo": "https://ilovebrides.almeidiano.dev/uploads/images/main-logo-inverse.svg",
+    "logo": "http://localhost:3000/resources/js/Components/images/main-logo-inverse.svg",
   "updated_at": {
     "$date": "2024-03-13T09:19:54.510Z"
   }

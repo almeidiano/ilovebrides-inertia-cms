@@ -12,7 +12,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
 import { useState } from 'react';
-import { Link } from '@mui/material';
+import { Link } from '@inertiajs/react'
 
 // icons
 import { ExpandLess, ExpandMore, InsertChart, ManageSearch, Description, Public} from '@mui/icons-material';
@@ -120,9 +120,11 @@ export default function ListItems() {
     </ListItemButton>
     <Collapse in={openComponents} timeout="auto" unmountOnExit>
       <List component="div" disablePadding>
-        <ListItemButton sx={{ pl: 4 }}>
-          <ListItemText primary="Rodapé" />
-        </ListItemButton>
+        <Link href='/components/footer' target='_blank'> 
+          <ListItemButton sx={{ pl: 4 }}>
+            <ListItemText primary="Rodapé" />
+          </ListItemButton>
+        </Link>
         <ListItemButton sx={{ pl: 4 }}>
           <ListItemText primary="Navegação" />
         </ListItemButton>

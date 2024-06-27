@@ -28,6 +28,7 @@ import ListItems from '@/Components/ListItems';
 // images
 import mainLogo from './images/main-logo.svg';
 import inverseLogo from './images/main-logo-inverse.svg';
+import { grey } from '@mui/material/colors';
 
 const drawerWidth = 240;
 
@@ -80,6 +81,7 @@ const defaultTheme = createTheme();
 
 export default function Dashboard({children}) {
   const [open, setOpen] = React.useState(true);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -129,7 +131,7 @@ export default function Dashboard({children}) {
           </Toolbar>
         </AppBar>
 
-        {/* sidebar */}
+        {/* main drawer */}
         <Drawer variant="permanent" open={open}>
           <Toolbar
             sx={{
@@ -164,10 +166,11 @@ export default function Dashboard({children}) {
         <Box
           component="main"
           sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
+            // backgroundColor: (theme) =>
+            //   theme.palette.mode === 'light'
+            //     ? theme.palette.grey[100]
+            //     : theme.palette.grey[900],
+            backgroundColor: grey[50],
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',

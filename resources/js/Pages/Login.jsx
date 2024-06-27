@@ -12,6 +12,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { router, usePage } from '@inertiajs/react'
 import Alert from '@mui/material/Alert';
+import { CircularProgress } from '@mui/material';
+import { useForm } from '@inertiajs/react'
 
 function Copyright(props) {
   return (
@@ -31,34 +33,37 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const [values, setValues] = useState({
-    email: "",
-    password: "",
+  const { data, setData, post, processing, errors } = useForm({
+    email: '',
+    password: '',
   })
 
-  const { errors } = usePage().props;
+  // const { errors } = usePage().props;
 
   const handleSubmit = (event) => {
+    // setLoading(true)
     event.preventDefault();
 
-    const data = new FormData(event.currentTarget);
+    // const data = new FormData(event.currentTarget);
 
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
 
-    router.post('/login', values)
+    post('/login')
+    // setLoading(false)
+    // console.log(sla)
   };
 
-  function handleChange(e) {
-    const key = e.target.id;
-    const value = e.target.value
-    setValues(values => ({
-        ...values,
-        [key]: value,
-    }))
-  }
+  // function handleChange(e) {
+  //   const key = e.target.id;
+  //   const value = e.target.value
+  //   setData(values => ({
+  //       ...values,
+  //       [key]: value,
+  //   }))
+  // }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -87,9 +92,9 @@ export default function SignIn() {
               label="Endereço de Email"
               name="email"
               autoComplete="email"
-              value={values.email}
+              value={data.email}
               autoFocus
-              onChange={handleChange}
+              onChange={e => setData('email', e.target.value)}
             />
             <TextField
               margin="normal"
@@ -100,21 +105,34 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={values.password}
-              onChange={handleChange}
+              value={data.password}
+              onChange={e => setData('password', e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Lembrar-me"
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Login
-            </Button>
+            {
+              processing ? 
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                disabled
+                startIcon={<CircularProgress color="inherit" size={20} />}
+              >
+                Login
+              </Button>
+              :
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Login
+              </Button>
+            }
 
             {
               errors.email &&
@@ -125,7 +143,7 @@ export default function SignIn() {
 
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <Copyright sx={{ mt: 4, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );

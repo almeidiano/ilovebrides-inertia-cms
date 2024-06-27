@@ -45,6 +45,9 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return to_route('home');
+            // return Inertia::render('/Home', [
+            //     'users' => 'sam'
+            // ]);
         }
 
         return back()->withErrors([
