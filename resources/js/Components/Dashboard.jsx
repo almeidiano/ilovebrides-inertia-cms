@@ -93,7 +93,7 @@ export default function Dashboard({children}) {
         <CssBaseline />
 
         {/* navbar */}
-        <AppBar position="absolute" open={open}>
+        <AppBar sx={{zIndex: 998}} position="absolute" open={open}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -121,7 +121,7 @@ export default function Dashboard({children}) {
               I Love Brides
             </Typography> */}
             <Box sx={{flexGrow: 1}}>
-              <Link href='/'><img src={inverseLogo} height={35} /></Link>
+              <Link href='/'><img src={inverseLogo} height={150} width={150} /></Link>
             </Box>
             <IconButton color="inherit" sx={{mr: 1}}>
               <Badge badgeContent={4} color="secondary">
@@ -144,7 +144,7 @@ export default function Dashboard({children}) {
             }}
           >
             <Typography variant="h6" component="div" sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center', position: 'absolute' }}>
-              <img src={mainLogo} height={35} />
+              <img src={mainLogo} height={150} width={150} />
             </Typography>
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />

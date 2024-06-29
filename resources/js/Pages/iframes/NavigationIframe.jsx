@@ -80,8 +80,8 @@ function NavigationIframe() {
                     <img
                         src={navigationData && navigationData.logo ? navigationData.logo : ""}
                         alt="ILOVEBRIDES Logo"
-                        width={200}
-                        height={200}
+                        width={150}
+                        height={150}
                     />
                 </div>
                 <div className="navbar-end"></div>
