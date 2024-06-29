@@ -1,131 +1,69 @@
-import axios from 'axios'
-import React from 'react'
-import { router, usePage } from '@inertiajs/react'
-import { useState, useEffect } from "react"
-import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
+import React, { useRef, useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
-import { styled } from "@mui/material";
+import PageInfo from '@/Components/PageInfo.jsx'
+import ComponentsDashboard from '@/Components/ComponentsDashboard.jsx'
 
-// appbar
-import CssBaseline from '@mui/material/CssBaseline';
+function Footer({data}) {
+    const iframeRef = useRef(null);
+    const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(true)
 
-function footer({data}) {
+    const sendMessageToIframe = () => {
+        const iframeWindow = iframeRef.current.contentWindow;
+        iframeWindow.postMessage({ type: 'SET_MESSAGE', payload: 'Hello from Parent!' }, '*');
+    };
 
-  console.log(data)
-  // const [footer, setFooter] = useState(data);
-  const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        const receiveMessage = (event) => {
+            if (event.data.type === 'SET_MESSAGE') {
+                setMessage(event.data.payload);
+            }
+        };
+        window.addEventListener('message', receiveMessage);
 
-  const Footer = styled('div')(() => ({
-    backgroundColor: 'black',
-    padding: 35,
-    color: 'white',
-    display: 'flex',
-    flexDirection: 'column'
-  }));
+        return () => {
+            window.removeEventListener('message', receiveMessage);
+        };
+    }, []);
 
-  return (
-      <Footer>
-        <img
-          src={data.logo}
-          // src={`${process.env.NEXT_PUBLIC_DEPLOY_ROOT_URL}/uploads/images/main-logo-inverse.svg`}
-          width={150}
-          alt="ILOVEBRIDES Logo"
-        />
-      </Footer>
-    // <footer className="footer p-10 bg-black text-neutral-content flex flex-col">
-    //   {
-    //     data && loading === false ?
-    //       <>
-    //         <div>
-    //           {/* <img
-    //             src={`http://localhost:8000/media/images/${footer.logo}`}
-    //             // src={`${process.env.NEXT_PUBLIC_DEPLOY_ROOT_URL}/uploads/images/main-logo-inverse.svg`}
-    //             height={150}
-    //             width={150}
-    //             alt="ILOVEBRIDES Logo"
-    //           /> */}
-    //         </div>
-    //         <div className="dropdown dropdown-top">
-    //           <label tabIndex={0} className="font-bold text-md">Fornecedores por Distrito</label>
-    //           <ul tabIndex={0} className="z-50 h-[250px] overflow-auto bg-white divide-y divide-gray-100 dropdown-content menu p-2 shadow bg-base-100 rounded-box w-100">
-    //             {
-    //               footer && footer.weddingDistricties.map((item, index) => {
-    //                 return <li key={index}><a href={item.url}>{item.text}</a></li>
-    //               })
-    //             }
-    //           </ul>
-    //         </div>
-    //         <div className="flex justify-center w-full justify-between grid grid-cols-4 max-[850px]:grid-cols-2 gap-y-10">
-    //           {
-    //             footer && footer.navigation.map((item, index) => {
-    //               return <div key={index} className="flex flex-col">
-    //                 <h3 className="text-lg mb-2">{item.text}</h3>
-    //                 <div className="flex flex-col space-y-3">
-    //                   {
-    //                     item.children.map((child, index) => {
-    //                       return <a key={index} href={child.url} className="link opacity-75 link-hover">{child.text}</a>
-    //                     })
-    //                   }
-    //                 </div>
-    //               </div>
-    //             })
-    //           }
-    //         </div>
+    const FooterChildPage = () => {
+        return (
+            <div>
+                <PageInfo title='Footer (rodapé)' description='Gerencie informações importantes do menu do rodapé que aparecerá em todas as páginas e módulos.' />
 
-    //         <div className="flex justify-between w-full items-center max-[850px]:flex-col items-start space-y-5">
-    //           <div className="flex space-x-4">
-    //             {
-    //               footer && footer.socialMedia.map((item, index) => {
-    //                 return <a className="flex items-center opacity-75 px-1" key={index} target="_blank" href={item.url}> <Image className="invert" alt="Social media icon" src={item.icon} height={13} width={13} /> </a>
-    //               })
-    //             }
-    //           </div>
-    //           <div className="flex space-x-4">
+                {loading && <div className='flex justify-center'><CircularProgress/></div>}
+                <iframe
+                    onLoad={() => setLoading(false)}
+                    ref={iframeRef}
+                    src="http://localhost:8000/iframes/footer"
+                    title="iframe"
+                    style={{ width: '100%', height: '400px', border: '1px', marginTop: 10 }}
+                />
+            </div>
+        )
+    }
 
-    //             <div className="flex items-center">
-    //               <PhoneIcon />
-    //               {/* <FontAwesomeIcon height={20} width={20} icon={faPhone} /> */}
-    //               {footer && footer.phone}
-    //             </div>
-
-    //             <div className="flex items-center">
-    //               <EmailIcon />
-    //               {/* <FontAwesomeIcon height={20} width={20} icon={faEnvelope} /> */}
-    //               {footer && footer.email}
-    //             </div>
-
-    //           </div>
-    //           {/* <div className="flex space-x-2">
-    //             <Image className="cursor-pointer" onClick={()=> {if (document) {document.getElementById('my_modal_google').showModal()}}} alt="GooglePlay Logo" src='/assets/images/GooglePlayBadge.png' width={130} height={20} />
-    //             <Image className="cursor-pointer" onClick={()=> {if (document) {document.getElementById('my_modal_apple').showModal()}}} alt="AppStore Logo" src='/assets/images/AppStoreBadge.png' width={120} height={20} />
-
-    //           </div> */}
-    //         </div>
-
-    //         <div className="flex justify-between w-full opacity-70 text-xs max-[530px]:flex-col">
-    //           {/* direitos reservados */}
-    //           {/* <div>{footerJson.rights}</div> */}
-    //           <div>© I LOVE BRIDES | ALL RIGHTS RESERVED</div>
-
-    //           {/* politicas legais */}
-    //           <div className="flex space-x-2">
-    //             {
-    //               footer && footer.legal.map((item, index) => {
-    //                 return <a key={index} href={item.url}>{item.text}</a>
-    //               })
-    //             }
-    //           </div>
-    //         </div>
-    //       </>
-    //     :
-    //     <Box sx={{display: 'flex', justifyContent: 'center'}}>
-    //       <CircularProgress />
-    //     </Box>
-    //   }
-
-    // </footer>
-  )
+    return (
+        // <div>
+        //     <PageInfo title='Footer (rodapé)' description='Gerencie informações importantes do menu do rodapé que aparecerá em todas as páginas e módulos.' />
+        //     {/*<button onClick={sendMessageToIframe}>Send Message to Iframe</button>*/}
+        //     {/*<p>Message from Iframe: {message}</p>*/}
+        //
+        //     {loading && <div className='flex justify-center'><CircularProgress/></div>}
+        //     <iframe
+        //         onLoad={() => setLoading(false)}
+        //         ref={iframeRef}
+        //         src="http://localhost:8000/iframes/footer"
+        //         title="iframe"
+        //         style={{ width: '100%', height: '400px', border: '1px', marginTop: 10 }}
+        //     />
+        //
+        // </div>
+        <ComponentsDashboard type='footer' items={data} children={<FooterChildPage />} />
+    );
 }
 
-export default footer
+export default Footer;
+
+
+

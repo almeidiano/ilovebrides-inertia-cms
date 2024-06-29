@@ -24,6 +24,7 @@ import Orders from './Orders';
 import Avatar from '@mui/material/Avatar';
 import ListSubheader from '@mui/material/ListSubheader';
 import ListItems from '@/Components/ListItems';
+import Version from '@/Components/Version';
 
 // images
 import mainLogo from './images/main-logo.svg';
@@ -148,9 +149,9 @@ export default function Dashboard({children}) {
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
-          </Toolbar>  
+          </Toolbar>
           <Divider />
-          
+
           {/* <List component="nav">
             {mainListItems}
             <Divider sx={{ my: 1 }} />
@@ -178,10 +179,11 @@ export default function Dashboard({children}) {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            
-            {children}
 
-            {/* put the version here */}
+            {children}
+              <Version />
+
+              {/* put the version here */}
             {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
         </Box>

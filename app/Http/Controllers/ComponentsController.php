@@ -19,6 +19,22 @@ class ComponentsController extends Controller
         $json = File::get(resource_path('js/Components/components/navigation.json'));
         $data = json_decode($json, true);
 
-        return response()->json($data);
+        return Inertia::render('components/Navigation', ['data' => $data]);
+    }
+
+    public function showFooterIframe() {
+        $json = File::get(resource_path('js/Components/components/footer.json'));
+        $data = json_decode($json, true);
+
+        // return response()->json($data);
+        return Inertia::render('iframes/Footer', ['data' => $data]);
+    }
+
+    public function showNavigationIframe() {
+        $json = File::get(resource_path('js/Components/components/navigation.json'));
+        $data = json_decode($json, true);
+
+        // return response()->json($data);
+        return Inertia::render('iframes/NavigationIframe', ['data' => $data]);
     }
 }

@@ -53,10 +53,10 @@
             }
           ]
         }
-      ],
-      "logo": "C:\\xampp\\htdocs\\ilovebrides-cms-laravel-api\\public\\media/images/C:\\xampp\\htdocs\\ilovebrides-cms-laravel-api\\public\\media/images/451a1773596ba3f6b3cbb8d146919451.png"
+      ]
     },
     "updated_at": {
       "$date": "2024-05-31T12:06:04.029Z"
-    }
+    },
+    "logo": "http://localhost:3000/resources/js/Components/images/main-logo.svg"
   }

@@ -13,6 +13,13 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::inertia('/', 'Home')->name('home');
 
+//iframes
+Route::prefix('iframes')->group(function () {
+//    Route::inertia('/footer', 'iframes/Footer');
+    Route::get('/footer', [ComponentsController::class, 'showFooterIframe'])->name('FooterIframe');
+    Route::get('/navigation', [ComponentsController::class, 'showNavigationIframe'])->name('NavigationIframe');
+});
+
 // seo
 Route::prefix('seo')->group(function () {
     Route::inertia('/metadata', 'seo/Metadata')->name('Metadata');
@@ -24,7 +31,6 @@ Route::prefix('seo')->group(function () {
 Route::prefix('components')->group(function () {
     Route::get('/navigation', [ComponentsController::class, 'showNavigation'])->name('Navigation');
     Route::get('/footer', [ComponentsController::class, 'showFooter'])->name('Footer');
-
 
     // Route::inertia('/navigation', 'seo/Navigation')->name('Navigation');
     // Route::inertia('/footer', 'components/Footer')->name('Footer');

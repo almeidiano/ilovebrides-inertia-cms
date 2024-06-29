@@ -23,7 +23,7 @@ export default function PageInfo({title, description}) {
           <ArrowBackIcon fontSize="inherit" />
         </IconButton>
         {title}
-      </Typography>    
+      </Typography>
       <Typography variant="subtitle1" gutterBottom>{description}</Typography>
       <Divider />
     </div>

@@ -6,6 +6,7 @@ import { grey } from '@mui/material/colors';
 import NavbarAndSidebar from '@/Components/NavbarAndSidebar';
 import React from 'react';
 import Version from '@/Components/Version';
+import '../css/app.css';
 
 // dashboards
 import Dashboard from '@/Components/Dashboard';
@@ -63,12 +64,15 @@ import ComponentsDashboard from '@/Components/ComponentsDashboard';
 //   );
 // };
 
+
+
 createInertiaApp({
   resolve: name => {
     const pages = import.meta.glob('./Pages/**/*.jsx', { eager: true });
     let page = pages[`./Pages/${name}.jsx`];
     // page.default.layout = name.startsWith('Login') || name.startsWith('components/') ? undefined : page => <Dashboard children={page} />;
-    page.default.layout = name.startsWith('components/') ? page => <ComponentsDashboard children={page} /> : page => <Dashboard children={page} />;
+    // page.default.layout = name.startsWith('iframes/') ? undefined : name.startsWith('components/') ? page => <ComponentsDashboard children={page} /> : page => <Dashboard children={page} />;
+      page.default.layout = name.startsWith('iframes/') || name.startsWith('components/') ? undefined : page => <Dashboard children={page} />;
 
     return page;
   },
@@ -77,7 +81,7 @@ createInertiaApp({
       // <AppWrapper currentRoute={props.initialPage.url}>
         <div>
           <App {...props} />
-          <Version />
+          {/*<Version />*/}
         </div>
       // </AppWrapper>
     );
