@@ -52,25 +52,21 @@ function NavigationIframe() {
                         <div className="drawer-side">
                             <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
                             <ul className="menu p-4 w-80 min-h-full bg-base-100 text-base-content">
-                                {/*{navigationData && navigationData.items.map((item, index) => (*/}
-                                {/*    item.children ? (*/}
-                                {/*        <li key={index}>*/}
-                                {/*            <details>*/}
-                                {/*                <summary>{item.text}</summary>*/}
-                                {/*                <ul className="p-2 bg-base-100">*/}
-                                {/*                    {item.children.map((child, idx) => (*/}
-                                {/*                        <li key={idx}><a href={child.url}>{child.text}</a></li>*/}
-                                {/*                    ))}*/}
-                                {/*                </ul>*/}
-                                {/*            </details>*/}
-                                {/*        </li>*/}
-                                {/*    ) : (*/}
-                                {/*        <li key={index}><a href={item.url}>{item.text}</a></li>*/}
-                                {/*    )*/}
-                                {/*))}*/}
-
                                 {navigationData && navigationData.navigation.items.map((item, index) => (
-                                    <li key={index}><a href={item.url}>{item.text}</a></li>
+                                    item.children ? (
+                                        <li key={index}>
+                                            <details>
+                                                <summary>{item.text}</summary>
+                                                <ul className="p-2 bg-base-100">
+                                                    {item.children.map((child, idx) => (
+                                                        <li key={idx}><a href={child.url}>{child.text}</a></li>
+                                                    ))}
+                                                </ul>
+                                            </details>
+                                        </li>
+                                    ) : (
+                                        <li key={index}><a href={item.url}>{item.text}</a></li>
+                                    )
                                 ))}
                             </ul>
                         </div>

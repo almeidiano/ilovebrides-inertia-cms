@@ -143,10 +143,21 @@ export default function Dashboard({children}) {
               overflowY: 'auto'
             }}
           >
-            <Typography variant="h6" component="div" sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center', position: 'absolute' }}>
-              <img src={mainLogo} height={150} width={150} />
-            </Typography>
-            <IconButton onClick={toggleDrawer}>
+              <Typography variant="h6" component="div" sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: '100%',
+                  justifyContent: 'center',
+                  position: 'absolute'
+              }}>
+                  {
+                      open ?
+                          <img src={mainLogo} height={150} width={150}/>
+                          :
+                          <div></div>
+                  }
+              </Typography>
+              <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
