@@ -120,7 +120,7 @@ export default function ListItems() {
     </ListItemButton>
     <Collapse in={openComponents} timeout="auto" unmountOnExit>
       <List component="div" disablePadding>
-        <Link href='/components/footer' target='_blank'> 
+        <Link href='/resources/js/Pages/components/footer/Footer' target='_blank'>
           <ListItemButton sx={{ pl: 4 }}>
             <ListItemText primary="Rodapé" />
           </ListItemButton>

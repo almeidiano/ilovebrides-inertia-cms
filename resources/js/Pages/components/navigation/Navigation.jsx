@@ -6,33 +6,19 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import Box from "@mui/material/Box";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-
-// icons
-import AddIcon from "@mui/icons-material/Add";
-import ListItem from "@mui/material/ListItem";
 import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
-
+import AddIcon from "@mui/icons-material/Add";
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import uniqid from 'uniqid';
-import Collapse from "@mui/material/Collapse";
+import NavigationItem from './NavigationItem.jsx';
 
 export default function Navigation({ data }) {
     const [navigationData, setNavigationData] = useState(data);
     const iframeRef = useRef(null);
     const [loading, setLoading] = useState(true);
-    const [bottomDrawerOpen, setBottomDrawerOpen] = React.useState(false);
-    const [selectedIndex, setSelectedIndex] = React.useState("");
+    const [bottomDrawerOpen, setBottomDrawerOpen] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState("");
 
-    const toggleBottomDrawer = () => {
-        setBottomDrawerOpen(!bottomDrawerOpen);
-    };
-
-    // Enviar dados de navegação para o iframe quando a navegação mudar
     useEffect(() => {
         if (iframeRef.current) {
             iframeRef.current.contentWindow.postMessage({ type: 'UPDATE_NAVIGATION', payload: navigationData }, '*');
@@ -44,6 +30,10 @@ export default function Navigation({ data }) {
         iframeRef.current.contentWindow.postMessage({ type: 'UPDATE_NAVIGATION', payload: navigationData }, '*');
     }, [navigationData]);
 
+    const toggleBottomDrawer = () => {
+        setBottomDrawerOpen(!bottomDrawerOpen);
+    };
+
     const updateNavigationData = () => {
         setNavigationData((prevData) => ({
             ...prevData,
@@ -53,7 +43,8 @@ export default function Navigation({ data }) {
                     {
                         id: uniqid(),
                         url: '#',
-                        text: 'Novo Item'
+                        text: 'Novo Item',
+                        children: []
                     },
                     ...prevData.navigation.items,
                 ]
@@ -61,17 +52,40 @@ export default function Navigation({ data }) {
         }));
     };
 
+    const createNavigationDataChildren = (parentId) => {
+        setNavigationData((prevData) => {
+            const newItem = prevData.navigation.items.map((item) => {
+                if (item.id === parentId) {
+                    return {
+                        ...item,
+                        children: [
+                            {
+                                id: uniqid(),
+                                url: '#',
+                                text: 'Novo Item'
+                            },
+                            ...item.children
+                        ],
+                    };
+                }
+                return item;
+            });
+            return {
+                ...prevData,
+                navigation: {
+                    ...prevData.navigation,
+                    items: newItem,
+                },
+            };
+        });
+    };
+
     const handleCollapse = index => {
-        if (selectedIndex === index) {
-            setSelectedIndex("")
-        } else {
-            setSelectedIndex(index)
-        }
+        setSelectedIndex(selectedIndex === index ? "" : index);
     };
 
     const deleteNavigationItem = (id) => {
-        let navigationDataUpdated = [...navigationData.navigation.items];
-        let filteredNavigationItems = navigationDataUpdated.filter((item) => item.id !== id);
+        let filteredNavigationItems = navigationData.navigation.items.filter((item) => item.id !== id);
 
         setNavigationData((prevData) => ({
             ...prevData,
@@ -103,6 +117,48 @@ export default function Navigation({ data }) {
         });
     };
 
+    const updateItem = (id, text, url) => {
+        setNavigationData((prevData) => {
+            const updatedItems = prevData.navigation.items.map((item) => {
+                if (item.id === id) {
+                    return { ...item, text, url };
+                }
+                return item;
+            });
+            return {
+                ...prevData,
+                navigation: {
+                    ...prevData.navigation,
+                    items: updatedItems,
+                },
+            };
+        });
+    };
+
+    const updateChildItem = (parentId, childId, text, url) => {
+        setNavigationData((prevData) => {
+            const updatedItems = prevData.navigation.items.map((item) => {
+                if (item.id === parentId) {
+                    const updatedChildren = item.children.map((child) => {
+                        if (child.id === childId) {
+                            return { ...child, text, url };
+                        }
+                        return child;
+                    });
+                    return { ...item, children: updatedChildren };
+                }
+                return item;
+            });
+            return {
+                ...prevData,
+                navigation: {
+                    ...prevData.navigation,
+                    items: updatedItems,
+                },
+            };
+        });
+    };
+
     function reoder(list, startIndex, endIndex) {
         const result = Array.from(list);
         const [removed] = result.splice(startIndex, 1);
@@ -126,79 +182,6 @@ export default function Navigation({ data }) {
             }
         }));
     }
-
-    const NavigationItem = ({ item, index }) => {
-        return (
-            <Draggable draggableId={item.id} index={index} key={item.id}>
-                {(provided, snapshot) => (
-                    <Box
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        sx={{ backgroundColor: snapshot.isDragging ? '#CCC' : '' }}
-                    >
-                        <ListItem
-                            onClick={() => handleCollapse(index)}
-                            key={item.text}
-                            disablePadding
-                            secondaryAction={
-                                <>
-                                    {item.children && (
-                                        <IconButton edge="end" aria-label="expand">
-                                            {selectedIndex === index ? <ExpandLess /> : <ExpandMore />}
-                                        </IconButton>
-                                    )}
-                                    <IconButton edge="end" aria-label="edit">
-                                        <EditIcon />
-                                    </IconButton>
-                                    <IconButton onClick={() => deleteNavigationItem(item.id)} edge="end" aria-label="delete">
-                                        <DeleteIcon />
-                                    </IconButton>
-                                </>
-                            }
-                        >
-                            <ListItemButton>
-                                <ListItemText primary={item.text} />
-                            </ListItemButton>
-                        </ListItem>
-
-                        {item.children && (
-                            <Collapse in={selectedIndex === index} timeout="auto" unmountOnExit>
-                                <List component="div" disablePadding>
-                                    <div className='flex justify-center'>
-                                        <IconButton aria-label="add">
-                                            <AddIcon />
-                                        </IconButton>
-                                    </div>
-                                    {item.children.map((childItem, childIndex) => (
-                                        <ListItem
-                                            key={childItem.id}
-                                            disablePadding
-                                            sx={{ pl: 4, pr: 2 }}
-                                            secondaryAction={
-                                                <div className='mx-4'>
-                                                    <IconButton edge="end" aria-label="edit">
-                                                        <EditIcon />
-                                                    </IconButton>
-                                                    <IconButton onClick={() => deleteNavigationChild(item.id, childItem.id)} edge="end" aria-label="delete">
-                                                        <DeleteIcon />
-                                                    </IconButton>
-                                                </div>
-                                            }
-                                        >
-                                            <ListItemButton>
-                                                <ListItemText primary={childItem.text} />
-                                            </ListItemButton>
-                                        </ListItem>
-                                    ))}
-                                </List>
-                            </Collapse>
-                        )}
-                    </Box>
-                )}
-            </Draggable>
-        );
-    };
 
     return (
         <div>
@@ -259,7 +242,20 @@ export default function Navigation({ data }) {
                                 {(provided) => (
                                     <div ref={provided.innerRef} {...provided.droppableProps}>
                                         {navigationData.navigation.items.map((item, index) => (
-                                            <NavigationItem key={item.id} item={item} index={index} />
+                                            <NavigationItem
+                                                key={item.id}
+                                                item={item}
+                                                index={index}
+                                                handleCollapse={handleCollapse}
+                                                selectedIndex={selectedIndex}
+                                                deleteNavigationItem={deleteNavigationItem}
+                                                deleteNavigationChild={deleteNavigationChild}
+                                                createNavigationDataChildren={createNavigationDataChildren}
+                                                updateItem={updateItem}
+                                                updateChildItem={updateChildItem}
+                                                navigationData={navigationData}
+                                                setNavigationData={setNavigationData}
+                                            />
                                         ))}
 
                                         {provided.placeholder}

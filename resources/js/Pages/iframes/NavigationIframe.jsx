@@ -53,7 +53,7 @@ function NavigationIframe() {
                             <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
                             <ul className="menu p-4 w-80 min-h-full bg-base-100 text-base-content">
                                 {navigationData && navigationData.navigation.items.map((item, index) => (
-                                    item.children ? (
+                                    item.children.length > 0 ? (
                                         <li key={index}>
                                             <details>
                                                 <summary>{item.text}</summary>
