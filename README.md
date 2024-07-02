@@ -1,5 +1,3 @@
-## Laravel & Inertia (no starter kit)
+## I LOVE BRIDES CMS
 
-Laravel 11 (11.11.1) with inertia.js already installed, no manual dependencies to install. Just clone this repository and hands-on.
-
-requirements: PHP 8.2^
+CMS (Content Management System) interno da I LOVE BRIDES. Aplicação Full-Stack feita a partir do monólito Inertia, que contém Laravel e React.JS
