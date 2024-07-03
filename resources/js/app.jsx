@@ -72,7 +72,7 @@ createInertiaApp({
     let page = pages[`./Pages/${name}.jsx`];
     // page.default.layout = name.startsWith('Login') || name.startsWith('components/') ? undefined : page => <Dashboard children={page} />;
     // page.default.layout = name.startsWith('iframes/') ? undefined : name.startsWith('components/') ? page => <ComponentsDashboard children={page} /> : page => <Dashboard children={page} />;
-      page.default.layout = name.startsWith('iframes/') ? undefined : page => <Dashboard children={page} />;
+      page.default.layout = name.startsWith('iframes/') || name.startsWith('login/') ? undefined : page => <Dashboard children={page} />;
 
     return page;
   },
