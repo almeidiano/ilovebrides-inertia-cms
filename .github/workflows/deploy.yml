@@ -20,11 +20,11 @@ jobs:
       - name: Install NPM dependencies
         run: npm install --force
 
-      - name: Install Composer dependencies
-        run: php ~/composer.phar install --no-dev
+#      - name: Install Composer dependencies
+#        run: php ~/composer.phar install --no-dev
 
-      - name: Generate artisan key
-        run: php artisan key:generate
+#      - name: Generate artisan key
+#        run: php artisan key:generate
 
       - name: Build
         run: npm run build
