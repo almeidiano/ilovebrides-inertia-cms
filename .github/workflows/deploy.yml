@@ -18,7 +18,7 @@ jobs:
           node-version: '20'
 
       - name: Install NPM dependencies
-        run: npm install
+        run: npm install --force
 
       - name: Install Composer dependencies
         run: php ~/composer.phar install --no-dev
