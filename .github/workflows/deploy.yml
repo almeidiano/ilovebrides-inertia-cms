@@ -1,0 +1,41 @@
+name: react hostinger deployment
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install NPM dependencies
+        run: npm install
+
+      - name: Install Composer dependencies
+        run: php ~/composer.phar install --no-dev
+
+      - name: Generate artisan key
+        run: php artisan key:generate
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to Hostinger
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: "-rlgoDzvc"
+          SOURCE: "."
+          REMOTE_HOST: ${{ vars.REMOTE_HOST }}
+          REMOTE_USER: ${{ vars.REMOTE_USER }}
+          REMOTE_PORT: ${{ vars.REMOTE_PORT }}
+          TARGET: "/home/u515915666/domains/almeidiano.dev/public_html/ilovebrides-inertia-cms"
