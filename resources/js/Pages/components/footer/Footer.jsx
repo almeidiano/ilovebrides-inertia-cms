@@ -22,7 +22,7 @@ import Backdrop from "@mui/material/Backdrop";
 import TextField from "@mui/material/TextField";
 import DoneIcon from "@mui/icons-material/Done.js";
 
-export default function Footer({ dataState }) {
+export default function Footer({ dataState, appUrl }) {
     const [footerData, setFooterData] = useState(dataState);
     const iframeRef = useRef(null);
     const [loading, setLoading] = useState(true);
@@ -380,7 +380,8 @@ export default function Footer({ dataState }) {
                 <iframe
                     ref={iframeRef}
                     onLoad={handleLoad}
-                    src="http://localhost:8000/iframes/footer"
+                    src={`${appUrl}/iframes/footer`}
+                    // src="http://localhost:8000/iframes/footer"
                     title="iframe"
                     style={{
                         width: '100%',

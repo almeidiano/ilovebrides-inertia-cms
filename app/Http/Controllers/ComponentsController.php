@@ -25,14 +25,14 @@ class ComponentsController extends Controller
         $json = File::get(resource_path('js/Components/components/footer.json'));
         $data = json_decode($json, true);
 
-        return Inertia::render('components/footer/Footer', ['dataState' => $data]);
+        return Inertia::render('components/footer/Footer', ['dataState' => $data, 'appUrl' => env('APP_URL')]);
     }
 
     public function showNavigation() {
         $json = File::get(resource_path('js/Components/components/navigation.json'));
         $data = json_decode($json, true);
 
-        return Inertia::render('components/navigation/Navigation', ['dataState' => $data]);
+        return Inertia::render('components/navigation/Navigation', ['dataState' => $data, 'appUrl' => env('APP_URL')]);
     }
 
     public function showFooterIframe() {

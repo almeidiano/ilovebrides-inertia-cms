@@ -22,7 +22,7 @@ import Backdrop from '@mui/material/Backdrop';
 import toast, { Toaster } from 'react-hot-toast';
 import FormControlLabel from "@mui/material/FormControlLabel";
 
-export default function Navigation({ dataState }) {
+export default function Navigation({ dataState, appUrl }) {
     const [navigationData, setNavigationData] = useState(dataState);
     const iframeRef = useRef(null);
     const [loading, setLoading] = useState(true);
@@ -271,7 +271,8 @@ export default function Navigation({ dataState }) {
                 <iframe
                     ref={iframeRef}
                     onLoad={handleLoad}
-                    src="http://localhost:8000/iframes/navigation"
+                    // src="http://localhost:8000/iframes/navigation"
+                    src={`${appUrl}/iframes/navigation`}
                     title="iframe"
                     style={{
                         width: '100%',
