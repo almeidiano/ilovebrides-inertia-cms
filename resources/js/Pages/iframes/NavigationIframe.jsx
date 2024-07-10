@@ -21,23 +21,11 @@ function NavigationIframe() {
         };
     }, []);
 
-    // const updateParent = () => {
-    //     window.parent.postMessage({ type: 'NAVIGATION_UPDATED', payload: { items: [{ text: 'Updated from Iframe', url: '#' }] } }, '*');
-    // };
-
     return (
         <div>
-            {/*{navigationData && (*/}
-            {/*    <ul>*/}
-            {/*        {navigationData.navigation.items.map((item, index) => (*/}
-            {/*            <li key={index}><a href={item.url}>{item.text}</a></li>*/}
-            {/*        ))}*/}
-            {/*    </ul>*/}
-            {/*)}*/}
-
             <div className="navbar bg-base-100 top-0 z-[100] relative shadow-md">
                 <div className="navbar-start">
-                    <div className={`drawer`}>
+                    <div className={`drawer ${navigationData && navigationData.navigation.position === 'right' ? 'drawer-end' : ''}`}>
                         <input id="my-drawer" type="checkbox" className="drawer-toggle"/>
                         <div className="drawer-content">
                             <label htmlFor="my-drawer" className="btn btn-ghost btn-circle drawer-button">

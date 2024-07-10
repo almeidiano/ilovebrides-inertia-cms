@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import PageInfo from "@/Components/PageInfo.jsx";
-import { CircularProgress, Button } from "@mui/material";
+import {CircularProgress, Button, Snackbar, RadioGroup, Radio} from "@mui/material";
 import Drawer from "@mui/material/Drawer";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
@@ -11,11 +11,23 @@ import AddIcon from "@mui/icons-material/Add";
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import uniqid from 'uniqid';
 import NavigationItem from './NavigationItem.jsx';
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import EditIcon from "@mui/icons-material/Edit";
+import ListItemButton from "@mui/material/ListItemButton";
+import Alert from "@mui/material/Alert";
+import { useForm } from '@inertiajs/react'
+import { router } from '@inertiajs/react'
+import Backdrop from '@mui/material/Backdrop';
+import toast, { Toaster } from 'react-hot-toast';
+import FormControlLabel from "@mui/material/FormControlLabel";
 
-export default function Navigation({ data }) {
-    const [navigationData, setNavigationData] = useState(data);
+export default function Navigation({ dataState }) {
+    const [navigationData, setNavigationData] = useState(dataState);
     const iframeRef = useRef(null);
     const [loading, setLoading] = useState(true);
+    const [loadingImage, setLoadingImage] = useState(false);
+    const [loadingNavigation, setLoadingNavigation] = useState(false);
     const [bottomDrawerOpen, setBottomDrawerOpen] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState("");
 
@@ -183,8 +195,66 @@ export default function Navigation({ data }) {
         }));
     }
 
+    const { post, processing, errors, reset } = useForm(null);
+
+    function handleSubmit() {
+        setLoadingNavigation(true)
+
+        router.put('navigation', navigationData, {
+            onSuccess: (page) => {
+                toast.success('Navegação atualizada com sucesso')
+                setLoadingNavigation(false)
+            },
+            onError: (errors) => {
+                console.log(errors)
+                toast.error('Ocorreu um erro ao atualizar a navegação')
+                setLoadingNavigation(false)
+            }
+        })
+    }
+
+    function handleFileUpload(file) {
+        setLoadingImage(true)
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        router.post('/components/navigation', formData, {
+            onSuccess: (page) => {
+                // Acessa os dados retornados do Laravel
+                const response = page.props;
+
+                setNavigationData({
+                    ...navigationData,
+                    logo: response.message
+                })
+
+                toast.success('Logo atualizada com sucesso')
+                setLoadingImage(false)
+            },
+            onError: (errors) => {
+                console.log(errors)
+                toast.error('Ocorreu um erro ao atualizar a logo')
+                setLoadingImage(false)
+            }
+        });
+    }
+
     return (
         <div>
+            <Toaster position="bottom-left" reverseOrder={false} />
+
+            {
+                loadingImage || loadingNavigation &&
+                <Backdrop
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={open}
+                    // onClick={handleClose}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
+            }
+
             <PageInfo title='Navegação (header)' description='Gerencie o menu de navegação que aparecerá em todas as páginas e módulos.' />
 
             <div className='my-2'>
@@ -212,6 +282,8 @@ export default function Navigation({ data }) {
                 />
             </div>
 
+            <div className='flex justify-end py-2'><Button onClick={handleSubmit} variant="contained">Salvar Atualizações</Button></div>
+
             <Drawer
                 anchor="bottom"
                 open={bottomDrawerOpen}
@@ -226,10 +298,52 @@ export default function Navigation({ data }) {
                     }}
                     role="presentation"
                 >
+                    <Typography variant="h6" component="div">Posição do menu</Typography>
+                    <RadioGroup
+                        defaultValue={navigationData.navigation.position}
+                        row
+                    >
+                        <FormControlLabel onChange={() =>     setNavigationData((prevData) => ({
+                            ...prevData,
+                            navigation: {
+                                ...prevData.navigation,
+                                position: 'left'
+                            }
+                        }))} value="left" control={<Radio />} label="Esquerdo" />
+                        <FormControlLabel onChange={() =>     setNavigationData((prevData) => ({
+                            ...prevData,
+                            navigation: {
+                                ...prevData.navigation,
+                                position: 'right'
+                            }
+                        }))} value="right" control={<Radio />} label="Direito" />
+                    </RadioGroup>
+
+                    <Typography variant="h6" component="div">Logo</Typography>
+
+                    <List>
+                        <ListItem
+                            secondaryAction={
+                                <>
+                                    <IconButton component="label" edge="end" aria-label="upload">
+                                        <input type="file" hidden onChange={event => handleFileUpload(event.target.files[0])} />
+                                        <EditIcon />
+                                    </IconButton>
+                                </>
+                            }
+                        >
+                            <ListItemButton>
+                                <img src={navigationData.logo} height='150' width='150' />
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+
+                    {/*<Divider />*/}
+
                     <Typography variant="h6" component="div">
                         Items da navegação
                     </Typography>
-                    <Divider />
+
                     <List>
                         <div className='flex justify-center'>
                             <IconButton onClick={updateNavigationData} aria-label="add">

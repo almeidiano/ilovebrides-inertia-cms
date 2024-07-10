@@ -11,225 +11,136 @@ import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
-import { useState } from 'react';
-import { Link } from '@inertiajs/react'
+import {useState} from 'react';
+import {Link} from '@inertiajs/react'
 
 // icons
-import { ExpandLess, ExpandMore, InsertChart, ManageSearch, Description, Public} from '@mui/icons-material';
+import {ExpandLess, ExpandMore, InsertChart, ManageSearch, Description, Public} from '@mui/icons-material';
 
 export default function ListItems() {
-  const [openUsers, setOpenUsers] = React.useState(false);
-  const [openComponents, setOpenComponents] = React.useState(false);
-  const [openCommunity, setOpenCommunity] = React.useState(false);
-  const [openSeo, setOpenSeo] = React.useState(false);
-  const [openStatistics, setOpenStatistics] = React.useState(false);
+    const [selectedIndex, setSelectedIndex] = useState("");
 
-  const handleClick = (relation) => {
-    switch (relation) {
-      case 'users':
-        setOpenUsers(!openUsers)
-      break;
-      case 'components':
-        setOpenComponents(!openComponents)
-      break;
-      case 'community':
-        setOpenCommunity(!openCommunity)
-      break;
-      case 'seo':
-        setOpenSeo(!openSeo)
-      break;
-      case 'statistics':
-        setOpenStatistics(!openStatistics)
-      break;
-    }
-  };
+    const handleCollapse = index => {
+        setSelectedIndex(selectedIndex === index ? "" : index);
+    };
 
-  return (
-    <React.Fragment>
+    const allItems = [
+        {
+            url: "/",
+            icon: <DashboardIcon />,
+            text: 'Dashboard',
+        },
+        {
+            url: "#",
+            icon: <PeopleIcon />,
+            text: 'Utilizadores',
+            children: [
+                {
+                    url: "users/admin",
+                    text: "Admin"
+                },
+                {
+                    url: "users/professionals",
+                    text: "Profissionais"
+                },
+                {
+                    url: "users/public",
+                    text: "Público"
+                },
+            ]
+        },
+        {
+            url: "statistics",
+            icon: <InsertChart />,
+            text: "Estatísticas"
+        },
+        {
+            url: "pages",
+            icon: <Description/>,
+            text: "Páginas"
+        },
+        {
+            url: "#",
+            icon: <ManageSearch/>,
+            text: "SEO",
+            children: [
+                {
+                    url: "metadata",
+                    text: "Metadados"
+                },
+                {
+                    url: "integration",
+                    text: "Integração"
+                },
+                {
+                    url: "sitemap",
+                    text: "Sitemap"
+                },
+            ]
+        },
+        {
+            url: "#",
+            icon: <LayersIcon/>,
+            text: "Componentes",
+            children: [
+                {
+                    url: "components/footer",
+                    text: "Rodapé"
+                },
+                {
+                    url: "components/navigation",
+                    text: "Navegação"
+                },
+            ]
+        }
+    ];
 
-    {/* dashboard */}
-    <Link href='/' underline="none">
-      <ListItemButton>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="Dashboard" />
-      </ListItemButton>
-    </Link>
+    const Item = ({ url, icon, text, children }) => {
+        const [selectedIndex, setSelectedIndex] = useState(-1);
 
-    {/* usuarios */}
-    <ListItemButton onClick={() => handleClick('users')}>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Ultilizadores" />
-      {openUsers ? <ExpandLess /> : <ExpandMore />}
-    </ListItemButton>
-    <Collapse in={openUsers} timeout="auto" unmountOnExit>
-      <List component="div" disablePadding>
-        <ListItemButton sx={{ pl: 4 }}>
-          <ListItemText primary="Admin" />
-        </ListItemButton>
-        <ListItemButton sx={{ pl: 4 }}>
-          <ListItemText primary="Pro" />
-        </ListItemButton>
-        <ListItemButton sx={{ pl: 4 }}>
-          <ListItemText primary="Público" />
-        </ListItemButton>
-      </List>
-    </Collapse>
+        const handleCollapse = (index) => {
+            setSelectedIndex(selectedIndex === index ? -1 : index);
+        };
 
-    {/* estatísticas */}
-    <ListItemButton>
-      <ListItemIcon>
-        <InsertChart />
-      </ListItemIcon>
-      <ListItemText primary="Estatísticas" />
-    </ListItemButton>
+        return (
+            children ? (
+                <div>
+                    <ListItemButton onClick={() => handleCollapse(children)}>
+                        <ListItemIcon>
+                            {icon}
+                        </ListItemIcon>
+                        <ListItemText primary={text} />
+                        {selectedIndex === children ? <ExpandLess /> : <ExpandMore />}
+                    </ListItemButton>
+                    <Collapse in={selectedIndex === children} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                            {children.map((item, index) => (
+                                <ListItemButton key={index} component="a" href={`http://localhost:8000/${item.url}`} sx={{ pl: 4 }}>
+                                    <ListItemText primary={item.text} />
+                                </ListItemButton>
+                            ))}
+                        </List>
+                    </Collapse>
+                </div>
+            ) : (
+                <Link href={url} underline="none">
+                    <ListItemButton>
+                        <ListItemIcon>
+                            {icon}
+                        </ListItemIcon>
+                        <ListItemText primary={text} />
+                    </ListItemButton>
+                </Link>
+            )
+        );
+    };
 
-    <ListItemButton>
-      <ListItemIcon>
-        <Description />
-      </ListItemIcon>
-      <ListItemText primary="Páginas" />
-    </ListItemButton>
+    return (
+        <React.Fragment>
+            {allItems.map((item, index) => (
+                <Item key={index} url={item.url} icon={item.icon} text={item.text} children={item.children} index={index} />
+            ))}
 
-    {/* seo */}
-    <ListItemButton onClick={() => handleClick('seo')}>
-      <ListItemIcon>
-        <ManageSearch />
-      </ListItemIcon>
-      <ListItemText primary="SEO" />
-      {openSeo ? <ExpandLess /> : <ExpandMore />}
-    </ListItemButton>
-    <Collapse in={openSeo} timeout="auto" unmountOnExit>
-      <List component="div" disablePadding>
-        <ListItemButton sx={{ pl: 4 }}> <ListItemText primary="Metadados" /> </ListItemButton>
-        <ListItemButton sx={{ pl: 4 }}> <ListItemText primary="Integração" /> </ListItemButton>
-        <ListItemButton sx={{ pl: 4 }}> <ListItemText primary="Sitemap" /> </ListItemButton>
-      </List>
-    </Collapse>
-
-    {/* componentes */}
-    <ListItemButton onClick={() => handleClick('components')}>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Componentes" />
-      {openComponents ? <ExpandLess /> : <ExpandMore />}
-    </ListItemButton>
-    <Collapse in={openComponents} timeout="auto" unmountOnExit>
-      <List component="div" disablePadding>
-        <Link href='/resources/js/Pages/components/footer/Footer' target='_blank'>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemText primary="Rodapé" />
-          </ListItemButton>
-        </Link>
-        <ListItemButton sx={{ pl: 4 }}>
-          <ListItemText primary="Navegação" />
-        </ListItemButton>
-      </List>
-    </Collapse>
-
-    {/* comunidade */}
-    <ListItemButton onClick={() => handleClick('community')}>
-      <ListItemIcon>
-        <Public />
-      </ListItemIcon>
-      <ListItemText primary="Comunidade" />
-      {openCommunity ? <ExpandLess /> : <ExpandMore />}
-    </ListItemButton>
-    <Collapse in={openCommunity} timeout="auto" unmountOnExit>
-      <List component="div" disablePadding>
-        <ListItemButton sx={{ pl: 4 }}>
-          <ListItemText primary="Rodapé" />
-        </ListItemButton>
-        <ListItemButton sx={{ pl: 4 }}>
-          <ListItemText primary="Navegação" />
-        </ListItemButton>
-      </List>
-    </Collapse>
-
-  </React.Fragment>
-  )
+        </React.Fragment>
+    )
 }
-
-// export const mainListItems = (
-//   <React.Fragment>
-
-//     {/* dashboard */}
-//     <ListItemButton>
-//       <ListItemIcon>
-//         <DashboardIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Dashboard" />
-//     </ListItemButton>
-
-//     {/* usuarios */}
-//     {/* <ListItemButton>
-//       <ListItemIcon>
-//         <PeopleIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Ultilizadores" />
-//     </ListItemButton> */}
-//     <ListItemButton>
-//       <ListItemIcon>
-//         <PeopleIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Ultilizadores" />
-//       {openUsers ? <ExpandLess /> : <ExpandMore />}
-//     </ListItemButton>
-//     <Collapse in={openUsers} timeout="auto" unmountOnExit>
-//       <List component="div" disablePadding>
-//         <ListItemButton sx={{ pl: 4 }}>
-//           <ListItemText primary="Admin" />
-//         </ListItemButton>
-//         <ListItemButton sx={{ pl: 4 }}>
-//           <ListItemText primary="Pro" />
-//         </ListItemButton>
-//         <ListItemButton sx={{ pl: 4 }}>
-//           <ListItemText primary="Público" />
-//         </ListItemButton>
-//       </List>
-//     </Collapse>
-
-//     <ListItemButton>
-//       <ListItemIcon>
-//         <BarChartIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Reports" />
-//     </ListItemButton>
-//     <ListItemButton>
-//       <ListItemIcon>
-//         <LayersIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Integrations" />
-//     </ListItemButton>
-//   </React.Fragment>
-// );
-
-// export const secondaryListItems = (
-//   <React.Fragment>
-//     <ListSubheader component="div" inset>
-//       Saved reports
-//     </ListSubheader>
-//     <ListItemButton>
-//       <ListItemIcon>
-//         <AssignmentIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Current month" />
-//     </ListItemButton>
-//     <ListItemButton>
-//       <ListItemIcon>
-//         <AssignmentIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Last quarter" />
-//     </ListItemButton>
-//     <ListItemButton>
-//       <ListItemIcon>
-//         <AssignmentIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Year-end sale" />
-//     </ListItemButton>
-//   </React.Fragment>
-// );

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import {styled, createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
@@ -29,89 +29,97 @@ import Version from '@/Components/Version';
 // images
 import mainLogo from './images/main-logo.svg';
 import inverseLogo from './images/main-logo-inverse.svg';
-import { grey } from '@mui/material/colors';
+import {grey} from '@mui/material/colors';
+import {Tooltip} from "@mui/material";
+import {Logout, Settings} from "@mui/icons-material";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
 
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    shouldForwardProp: (prop) => prop !== 'open',
+})(({theme, open}) => ({
+    zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
     }),
-  }),
+    ...(open && {
+        marginLeft: drawerWidth,
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
+const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})(
+    ({theme, open}) => ({
+        '& .MuiDrawer-paper': {
+            position: 'relative',
+            whiteSpace: 'nowrap',
+            width: drawerWidth,
+            transition: theme.transitions.create('width', {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
+            boxSizing: 'border-box',
+            ...(!open && {
+                overflowX: 'hidden',
+                transition: theme.transitions.create('width', {
+                    easing: theme.transitions.easing.sharp,
+                    duration: theme.transitions.duration.leavingScreen,
+                }),
+                width: theme.spacing(7),
+                [theme.breakpoints.up('sm')]: {
+                    width: theme.spacing(9),
+                },
+            }),
         },
-      }),
-    },
-  }),
+    }),
 );
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function Dashboard({children}) {
-  const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(true);
+    const [openProfile, setOpenProfile] = React.useState(false)
 
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
+    const handleProfile = () => {
+        setOpenProfile(!openProfile)
+    }
 
-  return (
-    <ThemeProvider theme={defaultTheme}>
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
+    const toggleDrawer = () => setOpen(!open)
 
-        {/* navbar */}
-        <AppBar sx={{zIndex: 998}} position="absolute" open={open}>
-          <Toolbar
-            sx={{
-              pr: '24px', // keep right padding when drawer closed
-            }}
-          >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: '36px',
-                ...(open && { display: 'none' }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-            {/* <Typography
+    return (
+        <ThemeProvider theme={defaultTheme}>
+            <Box sx={{display: 'flex'}}>
+                <CssBaseline/>
+
+                {/* navbar */}
+                <AppBar sx={{zIndex: 998}} position="absolute" open={open}>
+                    <Toolbar
+                        sx={{
+                            pr: '24px', // keep right padding when drawer closed
+                        }}
+                    >
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={toggleDrawer}
+                            sx={{
+                                marginRight: '36px',
+                                ...(open && {display: 'none'}),
+                            }}
+                        >
+                            <MenuIcon/>
+                        </IconButton>
+                        {/* <Typography
               component="h1"
               variant="h6"
               color="inherit"
@@ -120,85 +128,110 @@ export default function Dashboard({children}) {
             >
               I Love Brides
             </Typography> */}
-            <Box sx={{flexGrow: 1}}>
-              <Link href='/'><img src={inverseLogo} height={150} width={150} /></Link>
-            </Box>
-            <IconButton color="inherit" sx={{mr: 1}}>
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <Avatar>H</Avatar>
-          </Toolbar>
-        </AppBar>
+                        <Box sx={{flexGrow: 1}}>
+                            <Link href='/'><img alt='Navbar Logo' src={inverseLogo} height={150} width={150}/></Link>
+                        </Box>
 
-        {/* main drawer */}
-        <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-              overflowY: 'auto'
-            }}
-          >
-              <Typography variant="h6" component="div" sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  width: '100%',
-                  justifyContent: 'center',
-                  position: 'absolute'
-              }}>
-                  {
-                      open ?
-                          <img src={mainLogo} height={150} width={150}/>
-                          :
-                          <div></div>
-                  }
-              </Typography>
-              <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
+                        <Avatar sx={{width: 32, height: 32}}>M</Avatar>
 
-          {/* <List component="nav">
+                        {/*<Avatar>H</Avatar>*/}
+
+                        {/*<Tooltip title="Account settings">*/}
+                        {/*    <IconButton*/}
+                        {/*        onClick={handleProfile}*/}
+                        {/*        size="small"*/}
+                        {/*        sx={{ml: 2}}*/}
+                        {/*        aria-controls={openProfile ? 'account-menu' : undefined}*/}
+                        {/*        aria-haspopup="true"*/}
+                        {/*        aria-expanded={openProfile ? 'true' : undefined}*/}
+                        {/*    >*/}
+                        {/*        /!*<Avatar sx={{width: 32, height: 32}}>M</Avatar>*!/*/}
+                        {/*    </IconButton>*/}
+                        {/*    <Menu*/}
+                        {/*        id="basic-menu"*/}
+                        {/*        anchorEl={openProfile}*/}
+                        {/*        open={openProfile}*/}
+                        {/*        onClose={handleProfile}*/}
+                        {/*        MenuListProps={{*/}
+                        {/*            'aria-labelledby': 'basic-button',*/}
+                        {/*        }}*/}
+                        {/*    >*/}
+                        {/*        <MenuItem>Profile</MenuItem>*/}
+                        {/*        <MenuItem>My account</MenuItem>*/}
+                        {/*        <MenuItem>Logout</MenuItem>*/}
+                        {/*    </Menu>*/}
+                        {/*</Tooltip>*/}
+
+                    </Toolbar>
+                </AppBar>
+
+                {/* main drawer */}
+                <Drawer variant="permanent" open={open}>
+                    <Toolbar
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'flex-end',
+                            px: [1],
+                            overflowY: 'auto'
+                        }}
+                    >
+                        <Typography variant="h6" component="div" sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            width: '100%',
+                            justifyContent: 'center',
+                            position: 'absolute'
+                        }}>
+                            {
+                                open ?
+                                    <img src={mainLogo} height={150} width={150}/>
+                                    :
+                                    <div></div>
+                            }
+                        </Typography>
+                        <IconButton onClick={toggleDrawer}>
+                            <ChevronLeftIcon/>
+                        </IconButton>
+                    </Toolbar>
+                    <Divider/>
+
+                    {/* <List component="nav">
             {mainListItems}
             <Divider sx={{ my: 1 }} />
             {secondaryListItems}
           </List> */}
-          <List>
-            {/* {mainListItems} */}
-            <ListItems/>
-          </List>
-        </Drawer>
+                    <List>
+                        {/* {mainListItems} */}
+                        <ListItems/>
+                    </List>
+                </Drawer>
 
-        {/* main */}
-        <Box
-          component="main"
-          sx={{
-            // backgroundColor: (theme) =>
-            //   theme.palette.mode === 'light'
-            //     ? theme.palette.grey[100]
-            //     : theme.palette.grey[900],
-            backgroundColor: grey[50],
-            flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
-          }}
-        >
-          <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+                {/* main */}
+                <Box
+                    component="main"
+                    sx={{
+                        // backgroundColor: (theme) =>
+                        //   theme.palette.mode === 'light'
+                        //     ? theme.palette.grey[100]
+                        //     : theme.palette.grey[900],
+                        backgroundColor: grey[50],
+                        flexGrow: 1,
+                        height: '100vh',
+                        overflow: 'auto',
+                    }}
+                >
+                    <Toolbar/>
+                    <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
 
-            {children}
-              <Version />
+                        {children}
+                        <Version/>
 
-              {/* put the version here */}
-            {/* <Copyright sx={{ pt: 4 }} /> */}
-          </Container>
-        </Box>
-      </Box>
-    </ThemeProvider>
-  );
+                        {/* put the version here */}
+                        {/* <Copyright sx={{ pt: 4 }} /> */}
+                    </Container>
+                </Box>
+            </Box>
+        </ThemeProvider>
+    );
 }

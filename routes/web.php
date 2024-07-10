@@ -32,6 +32,12 @@ Route::prefix('components')->group(function () {
     Route::get('/navigation', [ComponentsController::class, 'showNavigation'])->name('Navigation');
     Route::get('/footer', [ComponentsController::class, 'showFooter'])->name('Footer');
 
+    Route::put('/navigation', [ComponentsController::class, 'updateNavigation'])->name('updateNavigation');
+    Route::post('/navigation', [ComponentsController::class, 'updateNavigationLogo'])->name('updateNavigationLogo');
+
+    Route::put('/footer', [ComponentsController::class, 'updateFooter'])->name('updateFooter');
+    Route::post('/footer', [ComponentsController::class, 'updateFooterLogo'])->name('updateFooterLogo');
+
     // Route::inertia('/navigation', 'seo/Navigation')->name('Navigation');
     // Route::inertia('/footer', 'components/Footer')->name('Footer');
 });

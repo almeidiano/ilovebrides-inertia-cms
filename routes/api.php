@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\SlaController;
+use App\Http\Controllers\ComponentsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('sla', [SlaController::class, 'sla']);
+// components
+Route::prefix('components')->group(function () {
+    Route::get('/navigation', [ComponentsController::class, 'showNavigationJson'])->name('showNavigationJson');
+    Route::get('/footer', [ComponentsController::class, 'showFooterJson'])->name('showFooterJson');
+});
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
