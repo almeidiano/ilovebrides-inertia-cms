@@ -115,7 +115,7 @@ export default function ListItems() {
                     <Collapse in={selectedIndex === children} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
                             {children.map((item, index) => (
-                                <ListItemButton key={index} component="a" href={`http://localhost:8000/${item.url}`} sx={{ pl: 4 }}>
+                                <ListItemButton key={index} component="a" href={`https://ilovebrides.almeidiano.dev/${item.url}`} sx={{ pl: 4 }}>
                                     <ListItemText primary={item.text} />
                                 </ListItemButton>
                             ))}
