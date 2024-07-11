@@ -40,7 +40,7 @@ class ComponentsController extends Controller
         $data = json_decode($json, true);
 
         // return response()->json($data);
-        return Inertia::render('iframes/FooterIframe', ['data' => $data]);
+        return Inertia::render('iframes/FooterIframe', ['data' => $data, 'appUrl' => env('APP_URL')]);
     }
 
     public function showNavigationIframe() {
@@ -48,7 +48,7 @@ class ComponentsController extends Controller
         $data = json_decode($json, true);
 
         // return response()->json($data);
-        return Inertia::render('iframes/NavigationIframe', ['data' => $data]);
+        return Inertia::render('iframes/NavigationIframe', ['data' => $data, 'appUrl' => env('APP_URL')]);
     }
 
     public function updateNavigation(Request $request) {
@@ -57,9 +57,13 @@ class ComponentsController extends Controller
             $navigationJson = $request->getContent();
 
             File::put(resource_path('js/Components/components/navigation.json'), $navigationJson);
-            return Inertia::render('components/navigation/Navigation', ['status' => true]);
+            return Inertia::render('components/navigation/Navigation', ['status' => true, 'appUrl' => env('APP_URL')]);
         }Catch (\Exception $e) {
-            return Inertia::render('components/navigation/Navigation', ['status' => false, 'message' => $e->getMessage()]);
+            return Inertia::render('components/navigation/Navigation', [
+                'status' => false,
+                'message' => $e->getMessage(),
+                'appUrl' => env('APP_URL')
+            ]);
         }
     }
 
@@ -69,9 +73,13 @@ class ComponentsController extends Controller
             $footerJson = $request->getContent();
 
             File::put(resource_path('js/Components/components/footer.json'), $footerJson);
-            return Inertia::render('components/footer/Footer', ['status' => true]);
+            return Inertia::render('components/footer/Footer', ['status' => true, 'appUrl' => env('APP_URL')]);
         }Catch (\Exception $e) {
-            return Inertia::render('components/footer/Footer', ['status' => false, 'message' => $e->getMessage()]);
+            return Inertia::render('components/footer/Footer', [
+                'status' => false,
+                'message' => $e->getMessage(),
+                'appUrl' => env('APP_URL')
+            ]);
         }
     }
 
@@ -94,9 +102,17 @@ class ComponentsController extends Controller
 
             File::put(resource_path('js/Components/components/navigation.json'), json_encode($navigationDecoded));
 
-            return Inertia::render('components/navigation/Navigation', ['status' => true, 'message' => asset('media/images/'.$imageName)]);
+            return Inertia::render('components/navigation/Navigation', [
+                'status' => true,
+                'message' => asset('media/images/'.$imageName),
+                'appUrl' => env('APP_URL')
+            ]);
         }Catch (\Exception $e) {
-            return Inertia::render('components/navigation/Navigation', ['status' => false, 'message' => $e->getMessage()]);
+            return Inertia::render('components/navigation/Navigation', [
+                'status' => false,
+                'message' => $e->getMessage(),
+                'appUrl' => env('APP_URL')
+            ]);
         }
 
     }
@@ -120,9 +136,17 @@ class ComponentsController extends Controller
 
             File::put(resource_path('js/Components/components/footer.json'), json_encode($footerDecoded));
 
-            return Inertia::render('components/footer/Footer', ['status' => true, 'message' => asset('media/images/'.$imageName)]);
+            return Inertia::render('components/footer/Footer', [
+                'status' => true,
+                'message' => asset('media/images/'.$imageName),
+                'appUrl' => env('APP_URL')
+            ]);
         }Catch (\Exception $e) {
-            return Inertia::render('components/footer/Footer', ['status' => false, 'message' => $e->getMessage()]);
+            return Inertia::render('components/footer/Footer', [
+                'status' => false,
+                'message' => $e->getMessage(),
+                'appUrl' => env('APP_URL')
+            ]);
         }
 
     }

@@ -353,7 +353,7 @@ export default function Footer({ dataState, appUrl }) {
             <Toaster position="bottom-left" reverseOrder={false}/>
 
             {
-                loadingImage || loadingFooter &&
+                (loadingImage || loadingFooter) &&
                 <Backdrop
                     sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
                     open={open}

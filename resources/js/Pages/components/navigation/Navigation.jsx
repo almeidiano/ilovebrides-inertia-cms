@@ -204,6 +204,7 @@ export default function Navigation({ dataState, appUrl }) {
             onSuccess: (page) => {
                 toast.success('Navegação atualizada com sucesso')
                 setLoadingNavigation(false)
+                console.log(page.props)
             },
             onError: (errors) => {
                 console.log(errors)
@@ -245,7 +246,7 @@ export default function Navigation({ dataState, appUrl }) {
             <Toaster position="bottom-left" reverseOrder={false} />
 
             {
-                loadingImage || loadingNavigation &&
+                (loadingImage || loadingNavigation) &&
                 <Backdrop
                     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                     open={open}
