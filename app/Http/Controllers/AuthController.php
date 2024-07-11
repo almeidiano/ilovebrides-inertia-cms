@@ -21,11 +21,11 @@ class AuthController extends Controller
     //     // dd($credentials);
     //     // if (Auth::attempt($credentials)) {
     //     //     $request->session()->regenerate();
- 
+
     //     //     // return redirect()->intended('dashboard');
     //     //     return to_route('/');
     //     // }
- 
+
     //     // return back()->withErrors([
     //     //     'email' => 'The provided credentials do not match our records.',
     //     // ])->onlyInput('email');
@@ -54,6 +54,7 @@ class AuthController extends Controller
             'email' => 'Credenciais Incorretas.',
         ])->onlyInput('email');
     }
+
     public function logout(Request $request)
     {
         Auth::logout();

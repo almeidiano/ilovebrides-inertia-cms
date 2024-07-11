@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ComponentsController;
+use App\Http\Middleware\Authentication;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/login', function () {
@@ -11,35 +12,38 @@ Route::get('/login', function () {
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::inertia('/', 'Home')->name('home');
+//Route::middleware([Authentication::class])->prefix('iframes')->controller(ComponentsController::class)->group(function () {
+//    Route::get('/footer', 'showFooterIframe')->name('FooterIframe');
+//    Route::get('/navigation', 'showNavigationIframe')->name('NavigationIframe');
+//});
 
-//iframes
-Route::prefix('iframes')->group(function () {
-//    Route::inertia('/footer', 'iframes/Footer');
-    Route::get('/footer', [ComponentsController::class, 'showFooterIframe'])->name('FooterIframe');
-    Route::get('/navigation', [ComponentsController::class, 'showNavigationIframe'])->name('NavigationIframe');
-});
+Route::middleware([Authentication::class])->group(function () {
+    Route::inertia('/', 'Home')->name('home');
 
-// seo
-Route::prefix('seo')->group(function () {
-    Route::inertia('/metadata', 'seo/Metadata')->name('Metadata');
-    Route::inertia('/integrations', 'seo/Integration')->name('Integration');
-    Route::inertia('/sitemap', 'seo/Sitemap')->name('Sitemap');
-});
+    //iframes
+    Route::prefix('iframes')->group(function () {
+        Route::get('/footer', [ComponentsController::class, 'showFooterIframe'])->name('FooterIframe');
+        Route::get('/navigation', [ComponentsController::class, 'showNavigationIframe'])->name('NavigationIframe');
+    });
 
-// components
-Route::prefix('components')->group(function () {
-    Route::get('/navigation', [ComponentsController::class, 'showNavigation'])->name('Navigation');
-    Route::get('/footer', [ComponentsController::class, 'showFooter'])->name('Footer');
+    // seo
+    Route::prefix('seo')->group(function () {
+        Route::inertia('/metadata', 'seo/Metadata')->name('Metadata');
+        Route::inertia('/integrations', 'seo/Integration')->name('Integration');
+        Route::inertia('/sitemap', 'seo/Sitemap')->name('Sitemap');
+    });
 
-    Route::put('/navigation', [ComponentsController::class, 'updateNavigation'])->name('updateNavigation');
-    Route::post('/navigation', [ComponentsController::class, 'updateNavigationLogo'])->name('updateNavigationLogo');
+    // components
+    Route::prefix('components')->group(function () {
+        Route::get('/navigation', [ComponentsController::class, 'showNavigation'])->name('Navigation');
+        Route::get('/footer', [ComponentsController::class, 'showFooter'])->name('Footer');
 
-    Route::put('/footer', [ComponentsController::class, 'updateFooter'])->name('updateFooter');
-    Route::post('/footer', [ComponentsController::class, 'updateFooterLogo'])->name('updateFooterLogo');
+        Route::put('/navigation', [ComponentsController::class, 'updateNavigation'])->name('updateNavigation');
+        Route::post('/navigation', [ComponentsController::class, 'updateNavigationLogo'])->name('updateNavigationLogo');
 
-    // Route::inertia('/navigation', 'seo/Navigation')->name('Navigation');
-    // Route::inertia('/footer', 'components/Footer')->name('Footer');
+        Route::put('/footer', [ComponentsController::class, 'updateFooter'])->name('updateFooter');
+        Route::post('/footer', [ComponentsController::class, 'updateFooterLogo'])->name('updateFooterLogo');
+    });
 });
 
 // users
