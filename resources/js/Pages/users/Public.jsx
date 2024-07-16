@@ -9,7 +9,7 @@ function handleActionClick(rowData) {
   console.log('Ações para:', rowData);
 }
 
-function General() {  
+function General({users}) {
   const columns = [
     {
       name: "id",
@@ -28,24 +28,8 @@ function General() {
       }
     },
     {
-      name: "username",
-      label: "Username",
-      options: {
-        filter: true,
-        sort: false,
-      }
-    },
-    {
       name: "email",
       label: "Email",
-      options: {
-        filter: true,
-        sort: false,
-      }
-    },
-    {
-      name: "role",
-      label: "Função",
       options: {
         filter: true,
         sort: false,
@@ -103,21 +87,11 @@ function General() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
-  const data = [
-    { id: 1, name: "Senber Portugal Lda.", username: "senber", email: "clientservice@andiwonder.com", role: "Professional", newsletter: 'sim' },
-    { id: 1, name: "Senber Portugal Lda.", username: "senber", email: "clientservice@andiwonder.com", role: "Professional", newsletter: 'sim' },
-    { id: 1, name: "Senber Portugal Lda.", username: "senber", email: "clientservice@andiwonder.com", role: "Professional", newsletter: 'sim' },
-    { id: 1, name: "Senber Portugal Lda.", username: "senber", email: "clientservice@andiwonder.com", role: "Professional", newsletter: 'sim' },
-    { id: 1, name: "Senber Portugal Lda.", username: "senber", email: "clientservice@andiwonder.com", role: "Professional", newsletter: 'sim' },
-    { id: 1, name: "Senber Portugal Lda.", username: "senber", email: "clientservice@andiwonder.com", role: "Professional", newsletter: 'sim' },
-    { id: 1, name: "Senber Portugal Lda.", username: "senber", email: "clientservice@andiwonder.com", role: "Professional", newsletter: 'sim' },
-    { id: 1, name: "Senber Portugal Lda.", username: "senber", email: "clientservice@andiwonder.com", role: "Professional", newsletter: 'sim' },
-    { id: 1, name: "Senber Portugal Lda.", username: "senber", email: "clientservice@andiwonder.com", role: "Professional", newsletter: 'sim' },
-    { id: 1, name: "Senber Portugal Lda.", username: "senber", email: "clientservice@andiwonder.com", role: "Professional", newsletter: 'sim' },
-    { id: 1, name: "Senber Portugal Lda.", username: "senber", email: "clientservice@andiwonder.com", role: "Professional", newsletter: 'sim' },
-  ];
-  
+
+  console.log(users)
+
+  const data = users;
+
   const options = {
     rowsPerPageOptions: [10],
     textLabels: {
@@ -155,7 +129,7 @@ function General() {
       },
     }
   }
-  
+
   return (
     <div>
       <PageInfo title="Ultilizadores Gerais (públicos e profissionais)" />

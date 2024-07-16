@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ComponentsController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\Authentication;
 use Illuminate\Support\Facades\Route;
 
@@ -44,13 +45,14 @@ Route::middleware([Authentication::class])->group(function () {
         Route::put('/footer', [ComponentsController::class, 'updateFooter'])->name('updateFooter');
         Route::post('/footer', [ComponentsController::class, 'updateFooterLogo'])->name('updateFooterLogo');
     });
-});
 
-// users
-Route::prefix('users')->group(function () {
-    Route::get('/general', function () {
-        return inertia('users/General');
-    });
+    // users
+        Route::prefix('users')->group(function () {
+//            Route::get('/public', function () {
+//                return inertia('users/Public');
+//            });
+            Route::get('/public', [UserController::class, 'showPublicUsers'])->name('showPublicUsers');
+        });
 });
 
 // Route::middleware('authenticated')->group(function () {

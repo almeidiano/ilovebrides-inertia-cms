@@ -52,18 +52,14 @@ export default function Footer({ dataState, appUrl }) {
     const updateFooterData = () => {
         setFooterData((prevData) => ({
             ...prevData,
-            navigation: {
-                ...prevData.navigation,
-                items: [
-                    {
-                        id: uniqid(),
-                        url: '#',
-                        text: 'Novo Item',
-                        children: []
-                    },
-                    ...prevData.navigation.items,
-                ]
-            }
+            navigation: [
+                {
+                    id: uniqid(),
+                    text: 'Novo Item',
+                    children: []
+                },
+                ...prevData.navigation
+            ]
         }));
     };
 
