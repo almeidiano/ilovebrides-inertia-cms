@@ -51,7 +51,11 @@ Route::middleware([Authentication::class])->group(function () {
 //            Route::get('/public', function () {
 //                return inertia('users/Public');
 //            });
+
+            // public users
             Route::get('/public', [UserController::class, 'showPublicUsers'])->name('showPublicUsers');
+            Route::post('/public', [UserController::class, 'deletePublicUsers'])->name('deletePublicUsers');
+
         });
 });
 

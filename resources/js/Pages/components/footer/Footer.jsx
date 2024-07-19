@@ -20,7 +20,7 @@ import {router} from "@inertiajs/react";
 import toast, {Toaster} from "react-hot-toast";
 import Backdrop from "@mui/material/Backdrop";
 import TextField from "@mui/material/TextField";
-import DoneIcon from "@mui/icons-material/Done.js";
+import DoneIcon from "@mui/icons-material/Done";
 
 export default function Footer({ dataState, appUrl }) {
     const [footerData, setFooterData] = useState(dataState);
