@@ -53,9 +53,11 @@ Route::middleware([Authentication::class])->group(function () {
 //            });
 
             // public users
+            Route::get('/public/{id}', [UserController::class, 'showPublicUser'])->name('showPublicUser');
             Route::get('/public', [UserController::class, 'showPublicUsers'])->name('showPublicUsers');
             Route::post('/public/delete', [UserController::class, 'deletePublicUsers'])->name('deletePublicUsers');
             Route::post('/public', [UserController::class, 'createUser'])->name('createUser');
+            Route::put('/public/{id}/user/{user_id}', [UserController::class, 'updateUser'])->name('updateUser');
         });
 });
 

@@ -42,6 +42,8 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
+//        dd(Auth::attempt($credentials));
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return to_route('home');
