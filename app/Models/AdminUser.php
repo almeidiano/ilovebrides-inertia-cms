@@ -15,5 +15,5 @@ class AdminUser extends Authenticatable
 
     public $timestamps = false;
 
-    protected $fillable = ['name', 'email', 'username', 'password', 'role', 'active']; // Defina os campos que podem ser preenchidos
+//    protected $fillable = ['name', 'email', 'username', 'password', 'role', 'active']; // Defina os campos que podem ser preenchidos
 }

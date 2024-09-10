@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\users;
 
-use App\Models\CMS\User;
+use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {

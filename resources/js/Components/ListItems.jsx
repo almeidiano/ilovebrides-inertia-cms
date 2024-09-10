@@ -55,9 +55,9 @@ export default function ListItems() {
             text: "Estatísticas"
         },
         {
-            url: "pages",
+            url: "#",
             icon: <Description/>,
-            text: "Páginas"
+            text: "Páginas",
         },
         {
             url: "#",
@@ -75,6 +75,10 @@ export default function ListItems() {
                 {
                     url: "sitemap",
                     text: "Sitemap"
+                },
+                {
+                    url: "information",
+                    text: "Informações"
                 },
             ]
         },

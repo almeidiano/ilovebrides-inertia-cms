@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ComponentsController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\SEOController;
+use App\Http\Controllers\users\AdminController;
+use App\Http\Controllers\users\UserController;
 use App\Http\Middleware\Authentication;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +31,8 @@ Route::middleware([Authentication::class])->group(function () {
 
     // seo
     Route::prefix('seo')->group(function () {
-        Route::inertia('/metadata', 'seo/Metadata')->name('Metadata');
+        Route::get('/metadata', [SEOController::class, 'index'])->name('Metadata');
+        Route::post('/metadata', [SEOController::class, 'update'])->name('MetadataUpdate');
         Route::inertia('/integrations', 'seo/Integration')->name('Integration');
         Route::inertia('/sitemap', 'seo/Sitemap')->name('Sitemap');
     });
@@ -46,18 +49,20 @@ Route::middleware([Authentication::class])->group(function () {
         Route::post('/footer', [ComponentsController::class, 'updateFooterLogo'])->name('updateFooterLogo');
     });
 
-    // users
+        // users
         Route::prefix('users')->group(function () {
-//            Route::get('/public', function () {
-//                return inertia('users/Public');
-//            });
-
             // public users
             Route::get('/public/{id}', [UserController::class, 'showPublicUser'])->name('showPublicUser');
             Route::get('/public', [UserController::class, 'showPublicUsers'])->name('showPublicUsers');
             Route::post('/public/delete', [UserController::class, 'deletePublicUsers'])->name('deletePublicUsers');
             Route::post('/public', [UserController::class, 'createUser'])->name('createUser');
             Route::put('/public/{id}/user/{user_id}', [UserController::class, 'updateUser'])->name('updateUser');
+
+            // admin users
+            Route::get('/admin', [AdminController::class, '__construct'])->name('showAdminUsers');
+            Route::post('/admin', [AdminController::class, 'createAdmin'])->name('createAdmin');
+            Route::post('/admin/delete', [AdminController::class, 'deleteAdminUsers'])->name('deleteAdminUsers');
+            Route::put('/admin/{id}', [AdminController::class, 'updateAdmin'])->name('updateAdmin');
         });
 });
 
