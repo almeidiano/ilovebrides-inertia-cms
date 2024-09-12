@@ -31,10 +31,13 @@ Route::middleware([Authentication::class])->group(function () {
 
     // seo
     Route::prefix('seo')->group(function () {
-        Route::get('/metadata', [SEOController::class, 'index'])->name('Metadata');
-        Route::post('/metadata', [SEOController::class, 'update'])->name('MetadataUpdate');
-        Route::inertia('/integrations', 'seo/Integration')->name('Integration');
-        Route::inertia('/sitemap', 'seo/Sitemap')->name('Sitemap');
+        // metadata
+        Route::get('/metadata', [SEOController::class, 'showMetadata'])->name('Metadata');
+        Route::post('/metadata', [SEOController::class, 'updateMetadata'])->name('MetadataUpdate');
+
+        // integrations
+        Route::get('/integrations', [SEOController::class, 'showIntegrations'])->name('Integration');
+        Route::post('/integrations', [SEOController::class, 'createIntegration'])->name('CreateIntegration');
     });
 
     // components

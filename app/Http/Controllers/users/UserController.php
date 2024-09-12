@@ -101,7 +101,6 @@ class UserController extends Controller
             // Fetch the updated list of users to return (or adjust as necessary)
             $users = DB::connection('ilovebrides_ilovebri')->select('SELECT user_id, name, email, district, phone_nr, cartao_vantagens, newsletter, engaged FROM users INNER JOIN public ON public.user_id = users.id WHERE users.role = "Public"');
             return $this->showPublicUsers();
-//            return Inertia::render('users/Public', ['users' => $users]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

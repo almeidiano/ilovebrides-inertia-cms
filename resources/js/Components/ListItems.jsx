@@ -13,6 +13,7 @@ import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
 import {useState} from 'react';
 import {Link} from '@inertiajs/react'
+import InfoIcon from '@mui/icons-material/Info';
 
 // icons
 import {ExpandLess, ExpandMore, InsertChart, ManageSearch, Description, Public} from '@mui/icons-material';
@@ -65,21 +66,17 @@ export default function ListItems() {
             text: "SEO",
             children: [
                 {
-                    url: "metadata",
+                    url: "seo/metadata",
                     text: "Metadados"
                 },
                 {
-                    url: "integration",
+                    url: "integrations",
                     text: "Integração"
                 },
                 {
                     url: "sitemap",
                     text: "Sitemap"
-                },
-                {
-                    url: "information",
-                    text: "Informações"
-                },
+                }
             ]
         },
         {
@@ -96,6 +93,11 @@ export default function ListItems() {
                     text: "Navegação"
                 },
             ]
+        },
+        {
+            url: "information",
+            icon: <InfoIcon/>,
+            text: "Informações"
         }
     ];
 

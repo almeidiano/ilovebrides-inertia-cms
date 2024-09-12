@@ -11,7 +11,7 @@ import Backdrop from "@mui/material/Backdrop";
 import {router} from "@inertiajs/react";
 import toast, {Toaster} from "react-hot-toast";
 
-function Metadata({companyInfo, status, appUrl}) {
+function Metadata({companyInfo}) {
     const [files, setFiles] = useState([]);
     const [openBackdrop, setOpenBackdrop] = useState(false);
 
@@ -46,6 +46,8 @@ function Metadata({companyInfo, status, appUrl}) {
         description: companyInfo.description,
         keywords: companyInfo.keywords
     });
+
+    console.log(metadataInformation)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -182,7 +184,7 @@ function Metadata({companyInfo, status, appUrl}) {
                         <CardActionArea>
                             <CardMedia
                                 sx={{height: 252, width: 504}}
-                                image={files[0] ? files[0].preview : metadataInformation.logoUrl} // Mostra a imagem base64
+                                image={metadataInformation.logoUrl && metadataInformation.logoUrl} // Mostra a imagem base64
                             />
                             <CardContent sx={{display: 'flex', flexDirection: 'column'}}>
                                 <span className="text-sm font-bold">{metadataInformation.title}</span>
@@ -199,7 +201,7 @@ function Metadata({companyInfo, status, appUrl}) {
                         <CardActionArea>
                             <CardMedia
                                 sx={{height: 261, width: 500}}
-                                image={files[0] ? files[0].preview : metadataInformation.logoUrl} // Mostra a imagem base64
+                                image={metadataInformation.logoUrl} // Mostra a imagem base64
                             />
                             <CardContent sx={{padding: 0}}>
                                 <div
@@ -226,7 +228,7 @@ function Metadata({companyInfo, status, appUrl}) {
                         <CardActionArea>
                             <CardMedia
                                 sx={{height: 288, width: 552}}
-                                image={files[0] ? files[0].preview : metadataInformation.logoUrl} // Mostra a imagem base64
+                                image={metadataInformation.logoUrl} // Mostra a imagem base64
                             />
                             <CardContent sx={{padding: 0}}>
                                 <div
